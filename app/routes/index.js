@@ -1,3 +1,5 @@
+require('os')
+
 var api = require('./api');
 
 
