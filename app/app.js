@@ -4,6 +4,4 @@ var express = require('express'),
 require("./configs/appConfig")(app);
 require('./routes')(app);
 
-
-
 module.exports = app;
