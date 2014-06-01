@@ -10,7 +10,15 @@ module.exports = function(app) {
 
     /* All request (without static files) will send to angular app
      * for angular routing and html5 history */
-    app.get(function(req, res) {
-        res.render('index');
-    });
+    if ( 'production' == app.get('env') ) {
+      app.use(function(req, res) {
+        res.render('production/index');
+      });
+    }
+
+    if ( 'development' == app.get('env') ) {
+      app.use(function(req, res) {
+        res.render('development/index');
+      });
+    }
 }
