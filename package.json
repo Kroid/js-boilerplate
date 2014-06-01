@@ -38,5 +38,7 @@
     "morgan": "^1.1.1",
     "serve-favicon": "^2.0.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "grunt": "^0.4.5"
+  }
 }
