@@ -18,7 +18,8 @@ module.exports = function(app) {
 
     if ( 'development' == app.get('env') ) {
       app.use(function(req, res) {
-        res.render('development/index');
+        //res.render('development/index');
+        res.render('production/index');
       });
     }
 }

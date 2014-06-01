@@ -1,12 +1,15 @@
 module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-include-source');
   grunt.loadNpmTasks('grunt-wiredep');
+  grunt.loadNpmTasks('grunt-contrib-concat');
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
   grunt.initConfig({
     wiredep: {
       target: {
         src: [
-          'app/views/development/index.jade'
+          'app/views/development/index.jade',
+          'app/views/production/index.jade'
         ],
         ignorePath: '../../../public'
       }
@@ -17,31 +20,37 @@ module.exports = function(grunt) {
         basePath: 'public/',
         baseUrl: '',
         templates: {
-          html: {
-            js: '<script src="{filePath}"></script>',
-            css: '<link rel="stylesheet" type="text/css" href="{filePath}" />'
-          },
-          haml: {
-            js: '%script{src: "{filePath}"}/',
-            css: '%link{href: "{filePath}", rel: "stylesheet"}/'
-          },
           jade: {
             js: 'script(src="{filePath}", type="text/javascript")',
             css: 'link(href="{filePath}", rel="stylesheet", type="text/css")'
-          },
-          scss: {
-            scss: '@import "{filePath}";',
-            css: '@import "{filePath}";'
-          },
-          less: {
-            less: '@import "{filePath}";',
-            css: '@import "{filePath}";'
           }
         }
       },
       angular: {
+        'app/views/production/index.jade': 'app/views/production/indexSource.jade'
+      },
+      angularDev: {
         files: {
-          'app/views/development/index.jade': 'app/views/development/indexSource.jade'
+          'app/views/development/index.jade': 'app/views/development/indexSource.jade',
+          'app/views/production/index.jade': 'app/views/production/indexSource.jade'
+        }
+      }
+    },
+
+    concat: {
+      options: {
+        separator: ';'
+      },
+      angular: {
+        src: ['public/angular-dev/**/*.js'],
+        dest: 'public/angular-production.js'
+      }
+    },
+
+    uglify: {
+      angular: {
+        files: {
+          'public/angular-production.min.js': 'public/angular-production.js'
         }
       }
     }
@@ -49,6 +58,8 @@ module.exports = function(grunt) {
 
   grunt.registerTask('default', [
     'includeSource',
-    'wiredep'
+    'wiredep',
+    'concat',
+    'uglify'
   ]);
 };
