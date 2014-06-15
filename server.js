@@ -8,4 +8,5 @@ function startServer() {
 }
 
 
-app.get('db').start(startServer);
+/* db.connect(forceSync, callback) */
+app.get('db').connect(true, startServer);
