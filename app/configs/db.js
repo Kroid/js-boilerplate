@@ -1,14 +1,14 @@
 var fs = require('fs');
 
-var db = 'mydb',
-    user = 'postgres',
+var db = '',
+    user = '',
     password = '';
 
 
 var Sequelize = require('sequelize'),
     sequelize = new Sequelize(db, user, password, {
-      dialect: 'postgres',
-      port: 5433  // default postgres port is 5432
+      dialect: 'sqlite',
+      storage: __dirname + '/../../db.sqlite'
     });
 
 
